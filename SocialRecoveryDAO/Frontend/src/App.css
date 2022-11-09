@@ -928,9 +928,6 @@ button.BtnPus {
 
 .custom {
   margin-top: 1rem;
-  word-wrap: break-word;
-  table-layout: fixed;
-  text-align: left;
 }
 
 .custom th {
