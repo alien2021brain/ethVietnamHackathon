@@ -1,6 +1,7 @@
 import { HardhatUserConfig } from 'hardhat/types';
 import 'hardhat-deploy';
 import 'hardhat-deploy-ethers';
+import "@nomiclabs/hardhat-ethers";
 import * as dotenv from 'dotenv'
 dotenv.config();
 import "@nomiclabs/hardhat-etherscan"
