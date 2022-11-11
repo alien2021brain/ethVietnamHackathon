@@ -8,13 +8,12 @@
         "forceConsistentCasingInFileNames": true,
         "outDir": "dist"
     },
-    "resolveJsonModule": true,
     "include": [
+        "hardhat.config.ts",
+        "./deploy",
+        "./test",
         "./scripts",
-        // "./typechain",
-        // "./deploy",
-        // "./test"
-        "./hardhat.config.ts"
+        "./typechain"
     ],
     "files": [
         "./hardhat.config.ts"
