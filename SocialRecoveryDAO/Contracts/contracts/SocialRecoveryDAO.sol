@@ -1,7 +1,9 @@
 //SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-contract SocialRecoveryDAO {
+import "./VerifySignature.sol";
+
+contract SocialRecoveryDAO is VerifySignature {
     uint256 DAOID;
     uint256 baseFee = 0.001 ether;
     mapping(bytes32=>address[]) user_to_SP;
@@ -9,13 +11,13 @@ contract SocialRecoveryDAO {
     event New_Pair(bytes32 user, address[] SP_address);
 
     // set the mapping of hash(user)->address[SP]
-    function set_pair(bytes32 user_hash, address[] calldata rp_addr) external returns(bool)
+    function set_pair(bytes32 user_hash, address[] calldata rp_addr) external
     {
         require(user_hash!=0,"user cannot be 0!");
 
         user_to_SP[user_hash] = rp_addr;
         emit New_Pair(user_hash,rp_addr);
-        return true;
+
     }
 
     // return the addresses of SP based of user hash
@@ -25,7 +27,7 @@ contract SocialRecoveryDAO {
     }
 
 
-      function registerMember(uint256) external{
+      function registerMember() external{
         DAOID_to_address[DAOID] = msg.sender;
         DAOID = DAOID+1;
       }
