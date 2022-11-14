@@ -1,9 +1,13 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { clsx } from "clsx";
 
 export default function SideBarAdmin() {
   const UserKey = localStorage.getItem("id");
-  console.log('UserKey', UserKey);
+  console.log("UserKey", UserKey);
+
+  const { pathname } = useLocation();
+
   return (
     <>
       <ul
@@ -29,17 +33,51 @@ export default function SideBarAdmin() {
         <hr className="my-0 sidebar-divider" />
 
         {/* Nav Item - Dashboard */}
-        <li className="nav-item active">
+        <li
+          className={clsx(
+            {
+              active: pathname === "/dashboard",
+            },
+            "nav-item"
+          )}
+        >
           <Link className="nav-link" to="/dashboard">
             <i className="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span>
           </Link>
         </li>
 
+        <li
+          className={clsx(
+            {
+              active: pathname === "/enroll",
+            },
+            "nav-item"
+          )}
+        >
+          <Link className="nav-link" to="/enroll">
+            <i className="fas fa-fw fa-tachometer-alt"></i>
+            <span>Enroll</span>
+          </Link>
+        </li>
+
+        <li
+          className={clsx(
+            {
+              active: pathname === "/guard",
+            },
+            "nav-item"
+          )}
+        >
+          <Link className="nav-link" to="/guard">
+            <i className="fas fa-fw fa-tachometer-alt"></i>
+            <span>Guard</span>
+          </Link>
+        </li>
+
         {/*<!-- Divider --> */}
         <hr className="sidebar-divider" />
 
-        
         {/* Nav Item - Utilities Collapse Menu */}
       </ul>
     </>
