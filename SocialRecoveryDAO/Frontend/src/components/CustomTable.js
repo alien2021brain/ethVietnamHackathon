@@ -1,6 +1,5 @@
 import MaterialTable from "material-table";
 import Pagination from "@mui/material/Pagination";
-import { useState } from "react";
 import { makeStyles } from "@mui/styles";
 
 const tableIcons = {
@@ -48,7 +47,7 @@ const CustomTable = (props) => {
     const totalPage = Math.ceil(count / rowsPerPage) || 1;
 
     return (
-      <div
+      <td
         style={{
           padding: "15px 25px",
           display: "flex",
@@ -100,7 +99,7 @@ const CustomTable = (props) => {
           variant="text"
           shape="rounded"
         />
-      </div>
+      </td>
     );
   };
 

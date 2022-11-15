@@ -1,62 +1,42 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { ConnectButton } from '@rainbow-me/rainbowkit';
-import { useAccount, useSignMessage, useNetwork, useDisconnect } from 'wagmi'
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { useAccount } from "wagmi";
 
 export default function TopBarAdmin() {
-    const navigate = useHistory()
-    const { isConnected, address } = useAccount();
-    const UserName = localStorage.getItem("FirstName");
+  const navigate = useHistory();
+  const { isConnected } = useAccount();
 
-    const handleLogOut = async () => {
-        // sessionStorage.clear();
-        localStorage.removeItem('id')
-        navigate.push('/');
-        //window.localStorage.clear();
+  const handleLogOut = async () => {
+    localStorage.removeItem("id");
+    navigate.push("/");
+  };
 
+  useEffect(() => {
+    if (!isConnected) {
+      handleLogOut();
     }
+  });
 
-    useEffect(() => {
-        if(!isConnected){
-            handleLogOut();
-        }
-        // if ( isConnected == true) {
-        //     console.log('isConnected');
-        //     //console.log("tst1__",isConnected);
-        //     //handleAuth()
-        //    // navigate.push('/dashboard')
-    
-        // } else {
-        //     handleLogOut();
-        //     console.log('disConnected');
-        //     //navigate.push('/signin')
-        //    // console.log("you are not connected");
-        // }
-      });
-    
-    return (
-        <>
-            {/* <!-- Topbar Search --> */}
-            <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+  return (
+    <>
+      <nav className="mb-4 bg-white shadow navbar navbar-expand navbar-light topbar static-top">
+        <ul className="ml-auto navbar-nav">
+          <div className="topbar-divider d-none d-sm-block"></div>
 
-
-                {/* <!-- Topbar Navbar --> */}
-                <ul className="navbar-nav ml-auto">
-                    <div className="topbar-divider d-none d-sm-block"></div>
-
-                    {/* <!-- Nav Item - User Information -->  */}
-                    <div className="mt-3">
-                        <ConnectButton label="Login With MetaMask" chainStatus="icon" accountStatus="avatar"
-                            showBalance={{
-                                smallScreen: false,
-                                largeScreen: true,
-                            }}
-                        />
-                    </div>
-                </ul>
-
-            </nav>
-        </>
-    )
+          <div className="mt-3">
+            <ConnectButton
+              label="Login With MetaMask"
+              chainStatus="icon"
+              accountStatus="avatar"
+              showBalance={{
+                smallScreen: false,
+                largeScreen: true,
+              }}
+            />
+          </div>
+        </ul>
+      </nav>
+    </>
+  );
 }

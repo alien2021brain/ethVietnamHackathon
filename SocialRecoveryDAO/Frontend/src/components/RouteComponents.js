@@ -1,36 +1,34 @@
 import React from "react";
-import { Route,Redirect } from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
 
-const isLogin=()=>{
-    const isLogin= localStorage.getItem("id") || false;
+const isLogin = () => {
+  const isLogin = localStorage.getItem("id") || false;
 
-    return isLogin;
-}
-
-export const PrivateRoute = ({component: Component, ...rest}) => {
- 
-    return (
-        <Route {...rest} render={props => (
-            isLogin() ?
-                <Component {...props} />
-            : <Redirect to="/signin" /> 
-        )} />
-    );
+  return isLogin;
 };
 
-export const PublicRoute = ({ ...props}) => {
-    return (
-        <Route  {...props} />
-    );
+export const PrivateRoute = ({ component: Component, ...rest }) => {
+  return (
+    <Route
+      {...rest}
+      render={(props) =>
+        isLogin() ? <Component {...props} /> : <Redirect to="/signin" />
+      }
+    />
+  );
 };
 
-export const ProtectedRoute = ({component: Component, ...rest}) => {
+export const PublicRoute = ({ ...props }) => {
+  return <Route {...props} />;
+};
 
-    return (
-        <Route {...rest} render={props => (
-            isLogin() ?
-            <Redirect to="/dashboard" />
-            :  <Component {...props} />
-        )} />
-    );
+export const ProtectedRoute = ({ component: Component, ...rest }) => {
+  return (
+    <Route
+      {...rest}
+      render={(props) =>
+        isLogin() ? <Redirect to="/dashboard" /> : <Component {...props} />
+      }
+    />
+  );
 };

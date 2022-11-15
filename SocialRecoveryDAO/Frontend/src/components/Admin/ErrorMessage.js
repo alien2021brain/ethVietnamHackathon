@@ -1,14 +1,13 @@
-export default function ErrorMessage({ message }) {
-    if (!message) return null;
-  
-    return (
-      <div className="alert alert-error mt-1">
-        <div>
-          
-          <label>{message}</label>
-          
-        </div>
+const ErrorMessage = ({ message }) => {
+  if (!message) return null;
+
+  return (
+    <div className="mt-1 alert alert-error">
+      <div>
+        <label>{message}</label>
       </div>
-    );
-  }
-  
+    </div>
+  );
+};
+
+export default ErrorMessage;
