@@ -15,6 +15,15 @@ const Enroll = () => {
     { title: "Rate", field: "Rate" },
     { title: "Rating", field: "Rating" },
   ];
+  const  data = [
+    { SPAddress: '0xF2379d114d065c54d9C49dB8bB3a4035550c4e71', Rate: '10', Rating: 2 },
+    { SPAddress: '0xBf7E2F0d6F3cE0AeD6711385b474d0cbdd966965', Rate: '10', Rating: 3  },
+    { SPAddress: '0xEe45A7dfe2EbDB8d113Ec669F2682f27DAC5Fc31', Rate: '10', Rating: 3  },
+    { SPAddress: '0xd5E5C7085d8e39e9242f910E1116B222c4002DC0', Rate: '0.5', Rating: 4  },
+    { SPAddress: '0xF538E6A7b08e4E2770F81B97dB4bbB6C475a4d6c', Rate: '20', Rating: 4  },
+    { SPAddress: '0x8d7477E0A4D9A3A5E81FeE5B0956Abf374C961bA', Rate: '20', Rating: 5  },
+    { SPAddress: '0x8b286889C52F8EcBBF91BCc08BFB46f888A25881', Rate: '15', Rating: 5  },
+  ]
 
   const [notes, getNotes] = useState([]);
 
@@ -91,29 +100,30 @@ const Enroll = () => {
   };
   //Delete Multipal row
   const handleBulkDelete = () => {
-    const urldt = "http://localhost:3001/deleteAllCompanysById/";
-    const updatedData = notes.filter((row) => selectedRows.includes(row));
-    console.log("dat____", updatedData);
-    const updt = updatedData.map((u) => u.CompanyId);
-    axios
-      .post(urldt, { ids: updt })
-      .then((response) => {
-        console.log("delete_____", response);
-        toast.success("Record Deleted successfully!", {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
-        setTimeout(() => {
-          getAllNotes(myId);
-        }, 2000);
-      })
-      .catch((error) => console.log(`Error: ${error}`));
-    getdltNotes(updatedData);
+    alert("Add Request");
+    // const urldt = "http://localhost:3001/deleteAllCompanysById/";
+    // const updatedData = notes.filter((row) => selectedRows.includes(row));
+    // console.log("dat____", updatedData);
+    // const updt = updatedData.map((u) => u.CompanyId);
+    // axios
+    //   .post(urldt, { ids: updt })
+    //   .then((response) => {
+    //     console.log("delete_____", response);
+    //     toast.success("Record Deleted successfully!", {
+    //       position: "top-right",
+    //       autoClose: 2000,
+    //       hideProgressBar: false,
+    //       closeOnClick: true,
+    //       pauseOnHover: true,
+    //       draggable: true,
+    //       progress: undefined,
+    //     });
+    //     setTimeout(() => {
+    //       getAllNotes(myId);
+    //     }, 2000);
+    //   })
+    //   .catch((error) => console.log(`Error: ${error}`));
+    // getdltNotes(updatedData);
   };
 
   return (
@@ -147,8 +157,8 @@ const Enroll = () => {
                           <CustomTable
                             title=""
                             columns={columns}
-                            data={notes}
-                            onSelectionChange={(rows) => setSelectedRows(rows)}
+                            data={data}
+                            //onSelectionChange={(rows) => setSelectedRows(rows)}
                             options={{
                               actionsColumnIndex: -1,
                               addRowPosition: "first",
@@ -160,10 +170,11 @@ const Enroll = () => {
                               },
                               loadingType: "none",
                             }}
+                            
                             actions={[
                               {
-                                icon: "delete",
-                                tooltip: "Delete all selected rows",
+                                icon: "personaddalt",
+                                tooltip: "Request",
                                 onClick: () => handleBulkDelete(),
                               },
                             ]}

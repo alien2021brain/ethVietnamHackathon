@@ -12,7 +12,7 @@ export default function TopBarAdmin() {
     const handleLogOut = async () => {
         // sessionStorage.clear();
         localStorage.removeItem('id')
-        navigate.push('/')
+        navigate.push('/');
         //window.localStorage.clear();
 
     }

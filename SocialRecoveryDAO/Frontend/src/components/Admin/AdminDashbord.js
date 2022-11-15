@@ -302,28 +302,6 @@ function AdminDashboard(props) {
                           Dashboard
                         </h1>
 
-                        {(() => {
-                          if (
-                            rememberMe ==
-                            "0xcAA36068E764E01CDeEf74fc23eE4204bd082c2b"
-                          ) {
-                            return (
-                              // <div><React.Fragment>
-                              //   <ToggleSwitch label="Contract Status" />
-                              // </React.Fragment></div>
-                              <div className="">
-                                <h4>
-                                  <span>Contract Status</span>{" "}
-                                  <button onClick={() => setIsOff(!isOff)}>
-                                    {isOff ? "Paused" : "UnPaused"}
-                                  </button>
-                                </h4>
-                              </div>
-                            );
-                          } else {
-                            return <GetPausedStatus />;
-                          }
-                        })()}
                       </div>
 
                       <div className="">
