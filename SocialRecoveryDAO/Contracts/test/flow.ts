@@ -1,15 +1,19 @@
+import { BaseProvider } from "@ethersproject/providers";
 import { expect } from "chai";
-import { deployments, ethers } from "hardhat";
+import { deployments, ethers, network } from "hardhat";
 import { SignerWithAddress } from "hardhat-deploy-ethers/signers";
-import { SocialRecoveryDAO } from "../typechain-types";
+import { contracts, SocialRecoveryDAO } from "../typechain-types";
+
 
 describe("DAO Unit test", async () => {
     let SRDAO: SocialRecoveryDAO;
     let accounts: SignerWithAddress[];
+    let provider: BaseProvider;
     beforeEach(async () => {
         await deployments.fixture(["all"]);
         SRDAO = await ethers.getContract("SocialRecoveryDAO");
         accounts = await ethers.getSigners();
+        provider = await ethers.provider;
     });
     it("set pair correctly", async () => {
         const password = "password";
@@ -36,6 +40,38 @@ describe("DAO Unit test", async () => {
         // let rc: any = await tx.wait();
         // TODO: fix error
         console.log(`tx=${tx}`);
+
+    });
+
+    it("transfer correctly", async () => {
+        const pre_balance_0 = await provider.getBalance(accounts[3].address);
+        const pre_balance_1 = await provider.getBalance(accounts[4].address);
+        console.log(`Pre balance sender = ${pre_balance_0}`);
+        console.log(`Pre balance receiver = ${pre_balance_1}`);
+        const sender = accounts[3].address;
+        const receiver = accounts[4].address;
+        const tx = await SRDAO.connect(accounts[3]).SimplTransfer(receiver, { value: ethers.utils.parseEther("1") });
+        await tx.wait();
+        const post_balance_1 = await provider.getBalance(receiver);
+        const post_balance_0 = await provider.getBalance(sender);
+        console.log(`Post balance sender = ${post_balance_0}`);
+        console.log(`Post balance receiver = ${post_balance_1}`);
+        expect(post_balance_1.gt(post_balance_0)).to.equal(true);
+    });
+
+    it("verify correctly", async () => {
+        const signer = accounts[0];
+        const to = accounts[1].address;
+        const message = "Request signing from User A";
+        const nonce = 12;
+
+        const hash = await SRDAO.getMessageHash(to, message, nonce);
+        const sig = await signer.signMessage(ethers.utils.arrayify(hash));
+
+        expect(await SRDAO.verify(signer.address, to, message, nonce, sig)).to.equal(true);
+    });
+
+    it("verify and transfer correctly", async () => {
 
     })
 })

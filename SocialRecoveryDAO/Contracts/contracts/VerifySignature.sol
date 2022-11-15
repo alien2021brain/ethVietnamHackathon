@@ -7,11 +7,10 @@ contract VerifySignature {
 
     function getMessageHash(
         address _to,
-        uint _amount,
         string memory _message,
         uint _nonce
     ) public pure returns (bytes32) {
-        return keccak256(abi.encodePacked(_to, _amount, _message, _nonce));
+        return keccak256(abi.encodePacked(_to, _message, _nonce));
     }
 
 
@@ -34,12 +33,11 @@ contract VerifySignature {
     function verify(
         address _signer,
         address _to,
-        uint _amount,
-        string memory _message,
+        string  memory _message,
         uint _nonce,
         bytes memory signature
     ) public pure returns (bool) {
-        bytes32 messageHash = getMessageHash(_to, _amount, _message, _nonce);
+        bytes32 messageHash = getMessageHash(_to, _message, _nonce);
         bytes32 ethSignedMessageHash = getEthSignedMessageHash(messageHash);
 
         return recoverSigner(ethSignedMessageHash, signature) == _signer;
