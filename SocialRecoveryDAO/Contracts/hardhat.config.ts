@@ -16,6 +16,10 @@ const config: HardhatUserConfig = {
       url: process.env.GOERLI_RPC_URL,
       accounts: [`${process.env.DEPLOYER_PRIVATE_KEY}`],
     },
+    polygonMumbai: {
+      url: process.env.POLYGON_MUMBAI_RPC_URL,
+      accounts: [`${process.env.DEPLOYER_PRIVATE_KEY}`],
+    }
   },
   solidity: {
     version: '0.8.4',
@@ -26,7 +30,8 @@ const config: HardhatUserConfig = {
   },
   etherscan: {
     apiKey: {
-      goerli: `${process.env.ETHERSCAN_API_KEY}`
+      goerli: `${process.env.ETHERSCAN_API_KEY}`,
+      polygonMumbai: `${process.env.POLYSCAN_API_KEY}`,
     }
   }
 
