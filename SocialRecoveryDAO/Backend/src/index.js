@@ -37,7 +37,7 @@ app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ extended: false, limit: '50mb' }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// require('./routes/')();
+require('./routes/')();
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });

@@ -1,5 +1,5 @@
 {
-  "name": "server-app",
+  "name": "SocialRecovery-DAO-backend",
   "version": "1.0.0",
   "description": "Server application",
   "main": "index.js",
