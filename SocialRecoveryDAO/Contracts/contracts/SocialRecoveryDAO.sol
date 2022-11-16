@@ -51,7 +51,7 @@ contract SocialRecoveryDAO is VerifySignature {
     //     uint _nonce,
     //     bytes memory signature
     // )
-      bool result = verify(sp,msg.sender, message, nonce, signature);
+      bool result = verify(msg.sender,sp, message, nonce, signature);
       require(result==true, "signature is not correct!");
       require(payable(address(sp)).send(baseFee), "transfer fee error");
       emit fee_paid(msg.sender,sp);

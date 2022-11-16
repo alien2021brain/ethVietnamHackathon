@@ -65,13 +65,27 @@ describe("DAO Unit test", async () => {
         const message = "Request signing from User A";
         const nonce = 12;
 
-        const hash = await SRDAO.getMessageHash(to, message, nonce);
+        //const hash = await SRDAO.getMessageHash(to, message, nonce);
+        // or use ethers.js method
+        const hash = await ethers.utils.solidityKeccak256(["address", "string", "uint"], [to, message, nonce]);
         const sig = await signer.signMessage(ethers.utils.arrayify(hash));
 
         expect(await SRDAO.verify(signer.address, to, message, nonce, sig)).to.equal(true);
     });
-
+    // not yet tested
     it("verify and transfer correctly", async () => {
+        //function VerifyAndTransfer(bytes memory signature, address sp, string memory message, uint nonce )
+        const signer = accounts[0];
+        const to = accounts[1].address;
+        const message = "Request signing from User A";
+        const nonce = 12;
+
+        const hash = await ethers.utils.solidityKeccak256(["address", "string", "uint"], [to, message, nonce]);
+        const sig = await signer.signMessage(ethers.utils.arrayify(hash));
+
+        await expect(SRDAO.VerifyAndTransfer(sig, to, message, nonce, { value: ethers.utils.parseEther("1") })).to.emit(SRDAO, "fee_paid").withArgs(signer.address, to);
+        //await SRDAO.VerifyAndTransfer(sig, to, message, nonce, { value: ethers.utils.parseEther("1") });
+
 
     })
 })

@@ -4,7 +4,9 @@ import 'hardhat-deploy-ethers';
 import * as dotenv from 'dotenv'
 dotenv.config();
 import "@nomiclabs/hardhat-etherscan"
+import "@nomiclabs/hardhat-waffle"
 import "@typechain/hardhat"
+
 const config: HardhatUserConfig = {
   defaultNetwork: "hardhat",
   networks: {
