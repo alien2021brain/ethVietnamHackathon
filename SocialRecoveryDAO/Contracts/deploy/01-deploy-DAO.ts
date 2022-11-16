@@ -17,7 +17,7 @@ const deployDAO: DeployFunction = async function (hre: HardhatRuntimeEnvironment
     });
 
     console.log(`deployed to: ${SRDAOContract.address}`);
-
+    await setTimeout(async () => { }, 10000);
     if (!developmentChains.includes(network.name) && process.env.ETHERSCAN_API_KEY) {
         await verify(SRDAOContract.address, [])
     }

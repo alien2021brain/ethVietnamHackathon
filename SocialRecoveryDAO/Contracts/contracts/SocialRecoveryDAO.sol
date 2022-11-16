@@ -10,7 +10,11 @@ contract SocialRecoveryDAO is VerifySignature {
     mapping(uint256=>address) DAOID_to_address;
     event New_Pair(bytes32 indexed user, address[] SP_address);
     event fee_paid(address indexed user, address indexed sp);
-    // set the mapping of hash(user)->address[SP]
+
+    /* Set the pair of hash(wallet_address+password) to Service Provider address(es)
+    *  @params user_hash: hash of Wallet address + password
+    *  @params rp_addr: An array of Service Provider Address
+    */
     function set_pair(bytes32 user_hash, address[] calldata rp_addr) external
     {
         require(user_hash!=0,"user cannot be 0!");
@@ -19,19 +23,25 @@ contract SocialRecoveryDAO is VerifySignature {
         emit New_Pair(user_hash,rp_addr);
 
     }
-
-    // return the addresses of SP based of user hash
+    /*  return the addresses of SP based of user hash
+    *   @params user_hash: hash of Wallet address + password
+    */
     function get_pair(bytes32 user_hash) external view returns(address[] memory){
         address[] memory rp_addr = user_to_SP[user_hash];
         return rp_addr;
     }
 
+    /* Register as a DAO member
+    *
+    */
+    function registerMember() external{
+      DAOID_to_address[DAOID] = msg.sender;
+      DAOID = DAOID+1;
+    }
 
-      function registerMember() external{
-        DAOID_to_address[DAOID] = msg.sender;
-        DAOID = DAOID+1;
-      }
-
+    /* Get total list of DAO members
+    * 
+    */
     function getDAOmember() external view returns(address [] memory){
         address[] memory DAOmember; // define an empty array
 
@@ -43,6 +53,13 @@ contract SocialRecoveryDAO is VerifySignature {
 
     }
 
+    /* Verify if signature is signed from SP
+    *  If yes, transfer fee to SP (User has to send ethers when calling this function)
+    *  @params signature: signature signed
+    *  @params sp: the address of service provider
+    *  @params message: message signed by signer
+    *  @params nonce: number to prevent re-entrancy
+    */
     function VerifyAndTransfer(bytes memory signature, address sp, string memory message, uint nonce ) public payable {
     //       function verify(
     //     address _signer,
@@ -57,6 +74,9 @@ contract SocialRecoveryDAO is VerifySignature {
       emit fee_paid(msg.sender,sp);
     }
 
+    /* Simple Transfer function for testing
+    *  @paarams receiver: the receiver of ethers
+    */
     function SimplTransfer(address receiver) public payable{
       payable(address(receiver)).send(msg.value);
     }
